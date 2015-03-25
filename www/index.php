@@ -22,6 +22,8 @@
 			$_SESSION["event"]= $result->ID;
 	}
 	
+	$lasttrans= NULL;
+	
 	if(isset($_GET["event"])) {
 		$_SESSION["event"]= sanitizeString($_GET["event"]);
 	}
@@ -82,7 +84,7 @@
 	$info= mysqli_fetch_object($info);
 ?>
 
-<title>Flohmarkt - <? echo mydate($info->date) . " " . $info->name; ?></title>
+<title>Flohmarkt - <? if( $info ) echo mydate($info->date) . " " . $info->name; ?></title>
 </head>
 
 <link rel="stylesheet" type="text/css" href="config/style.css">
@@ -141,8 +143,8 @@
 			<?
 				
 		}
-				
-		if( isset($_SESSION["event"]) ) {
+
+		if( isset($_SESSION["event"]) && $view!="new" ) {
 			if( $view!=NULL ) 
 				echo "<hr>";
 			?>
