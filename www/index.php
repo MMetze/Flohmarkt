@@ -21,6 +21,9 @@
 			$result= mysqli_fetch_object($result);
 			$_SESSION["event"]= $result->ID;
 	}
+	if(!isset($_SESSION["trans"])) {
+		$_SESSION["trans"]= NULL;
+	}
 	
 	$lasttrans= NULL;
 	
@@ -88,7 +91,7 @@
 	}
 ?>
 
-<title>Flohmarkt - <? if( $info ) echo mydate($info->date) . " " . $info->name; ?></title>
+<title>Flohmarkt - <?php if( $info ) echo mydate($info->date) . " " . $info->name; ?></title>
 </head>
 
 <link rel="stylesheet" type="text/css" href="config/style.css">
@@ -121,7 +124,7 @@
 				Datum: <input name="date" type="date" required><br />
 				<input type="submit" />
 			</form>
-			<?
+			<?php
 		} else if( $view=="eventdetails") {
 			$query= "SELECT seller, SUM(value) AS sum";
 			$query.= " FROM " . $pf . "transaction_details AS d LEFT JOIN " . $pf . "transactions AS t";
@@ -136,15 +139,15 @@
 					<th>Verk&auml;ufer</th>
 					<th>Summe</th>
 				</tr>			
-				<? while( $row= mysqli_fetch_object($result) ) {
+				<?php while( $row= mysqli_fetch_object($result) ) {
 					?>
 					<tr>
-						<td><? echo $row->seller; ?></td>
-						<td><? echo $row->sum; ?>&euro;</td>
+						<td><?php echo $row->seller; ?></td>
+						<td><?php echo $row->sum; ?>&euro;</td>
 					</tr>
-				<? } ?>
+				<?php } ?>
 			</table>
-			<?
+			<?php
 				
 		}
 
@@ -154,12 +157,12 @@
 			?>
 			<form name="entry" action="index.php" method="post">
 				<input name="type" value="entry" type="hidden" />
-				<input name="transaction" value="<? echo $_SESSION["trans"]; ?>" type="hidden">
+				<input name="transaction" value="<?php echo $_SESSION["trans"]; ?>" type="hidden">
 				Verk&auml;ufer*Preis<br />
 				<input name="entry" type="text" autofocus /><br />
 				Leeres Feld= Verkauf beenden
 			</form>
-			<?
+			<?php
 			if( $_SESSION["trans"] || $lasttrans ) {
 				if( $_SESSION["trans"] ) {
 					$lasttrans= $_SESSION["trans"];
@@ -172,22 +175,23 @@
 						<th>Verk&auml;ufer</th>
 						<th>Summe</th>
 					</tr>			
-					<? while( $row= mysqli_fetch_object($result) ) {
+					<?php while( $row= mysqli_fetch_object($result) ) {
 						?>
 						<tr>
-							<td><? echo $row->seller; ?></td>
-							<td><? echo $row->value; ?>&euro;</td>
+							<td><?php echo $row->seller; ?></td>
+							<td><?php echo $row->value; ?>&euro;</td>
 						</tr>
-						<? if( isset($sum) ) {
+						<?php 
+					}
+					if( isset($sum) ) {
 							?>
 							<tr>
 								<td><B>Summe</B></td>
-								<td><B><? echo $sum; ?>&euro;</B></td>
-							</tr> <?
-						}
+								<td><B><?php echo $sum; ?>&euro;</B></td>
+							</tr> <?php
 					} ?>
 				</table>
-				<?
+				<?php
 				$lasttrans= NULL;
 			}
 		}
