@@ -46,6 +46,7 @@
 			$neweventdate= sanitizeString($_POST["date"]);
 			$query= "INSERT INTO " . $pf . "events ( name, date ) VALUES ( '$neweventname', '$neweventdate' );";
 			$dbc->myQuery($query);
+			break;
 		
 		case "entry":
 			if( $_SESSION["trans"]==NULL || !isset($_SESSION["trans"]) ) { /* create new transaction ID */
@@ -74,14 +75,17 @@
 					$dbc->myQuery($query);
 				}
 			}
+		break;
 	}
 ?>
 
 <head>
 <?php
-	$query="SELECT name, date FROM " . $pf . "events WHERE ID=" . $_SESSION["event"] . ";";
-	$info= $dbc->myQuery($query);
-	$info= mysqli_fetch_object($info);
+	if( $_SESSION["event"] != NULL ) {
+		$query="SELECT name, date FROM " . $pf . "events WHERE ID=" . $_SESSION["event"] . ";";
+		$info= $dbc->myQuery($query);
+		$info= mysqli_fetch_object($info);
+	}
 ?>
 
 <title>Flohmarkt - <? if( $info ) echo mydate($info->date) . " " . $info->name; ?></title>
