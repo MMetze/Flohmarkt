@@ -1,3 +1,26 @@
+<?php 
+/* 	Flohmarkt Kasse - Manage sells and seller payouts
+    Copyright (C) 2015  Metze, Matthias
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	
+	Contact information
+	eMail: m.metze@gmx.com
+	GitHub: https://github.com/MMetze/Flohmarkt
+ */
+ ?>
+
 <?php
 
 class db {
@@ -32,7 +55,7 @@ public function myQuery($query, $uid=0) {
 		$query= str_replace($defNULL, "NULL", $query);
 		
 		# enable logging
-		if( true ) {   # set for uid if only with actual user
+		if( false ) {   # set for uid if only with actual user
 			$sub= substr($query, 0, 5);
 			if( ($sub=="DELET" || $sub=="INSER" || $sub=="UPDAT") && strpos($query,'tmp_')==false ) { # $sub=="DELET" || $sub=="INSER" || $sub=="UPDAT"
 				$log= 'INSERT INTO logging ( userid, query ) VALUES ( "' . $uid . '", "' . $query . '" )';

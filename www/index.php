@@ -1,3 +1,26 @@
+<?php 
+/* 	Flohmarkt Kasse - Manage sells and seller payouts
+    Copyright (C) 2015  Metze, Matthias
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	
+	Contact information
+	eMail: m.metze@gmx.com
+	GitHub: https://github.com/MMetze/Flohmarkt
+ */
+ ?>
+ 
 <html>
 
 <?php
@@ -126,6 +149,7 @@
 			</form>
 			<?php
 		} else if( $view=="eventdetails") {
+			$totalsum= 0;
 			$query= "SELECT seller, SUM(value) AS sum";
 			$query.= " FROM " . $pf . "transaction_details AS d LEFT JOIN " . $pf . "transactions AS t";
 			$query.= " ON d.transaction_ID=t.ID";
@@ -138,15 +162,19 @@
 				<tr>
 					<th>Verk&auml;ufer</th>
 					<th>Summe</th>
+					<th>Netto</th>
 				</tr>			
 				<?php while( $row= mysqli_fetch_object($result) ) {
+						$totalsum= $totalsum+$row->sum;
 					?>
 					<tr>
 						<td><?php echo $row->seller; ?></td>
-						<td><?php echo $row->sum; ?>&euro;</td>
+						<td><?php echo number_format((float)$row->sum, 2, ',', ''); ?>&euro;</td>
+						<td><?php echo number_format((float)$row->sum*0.80, 2, ',', ''); ?>&euro;</td>
 					</tr>
 				<?php } ?>
 			</table>
+			<B>Gesamt: <?php echo number_format((float)$totalsum, 2, ',', ''); ?>&euro;</B>
 			<?php
 				
 		}
