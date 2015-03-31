@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `fm_events` (
   `date` date NOT NULL,
   `name` varchar(32) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
 
 -- --------------------------------------------------------
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `fm_transactions` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `event_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
 
 -- --------------------------------------------------------
 
@@ -74,4 +74,4 @@ CREATE TABLE IF NOT EXISTS `fm_transaction_details` (
   `seller` int(10) unsigned NOT NULL,
   `value` decimal(6,2) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
